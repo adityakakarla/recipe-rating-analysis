@@ -105,6 +105,7 @@ My final cleaned dataset contained 83,782 rows and 24 columns.
 
 Here is a preview of the first 5 rows. Note that some columns have been removed as their values were too large to be effectively displayed on this site.
 
+<div style="overflow-x:auto;">
 | name                                 |     id | submitted           |   n_steps |   n_ingredients |   rating | chicken_in_ingredients   | chicken_in_name   | chicken_in_description   |   year |   month |   calories |   total_fat |   sugar |   sodium |   protein |   saturated_fat |   carbohydrates |
 |:-------------------------------------|-------:|:--------------------|----------:|----------------:|---------:|:-------------------------|:------------------|:-------------------------|-------:|--------:|-----------:|------------:|--------:|---------:|----------:|----------------:|----------------:|
 | 1 brownies in the world    best ever | 333281 | 2008-10-27 00:00:00 |        10 |               9 |        4 | False                    | False             | False                    |   2008 |      10 |      138.4 |          10 |      50 |        3 |         3 |              19 |               6 |
@@ -112,6 +113,7 @@ Here is a preview of the first 5 rows. Note that some columns have been removed 
 | 412 broccoli casserole               | 306168 | 2008-05-30 00:00:00 |         6 |               9 |        5 | True                     | False             | False                    |   2008 |       5 |      194.8 |          20 |       6 |       32 |        22 |              36 |               3 |
 | millionaire pound cake               | 286009 | 2008-02-12 00:00:00 |         7 |               7 |        5 | False                    | False             | False                    |   2008 |       2 |      878.3 |          63 |     326 |       13 |        20 |             123 |              39 |
 | 2000 meatloaf                        | 475785 | 2012-03-06 00:00:00 |        17 |              13 |        5 | False                    | False             | False                    |   2012 |       3 |      267   |          30 |      12 |       12 |        29 |              48 |               2 |
+</div>
 
 ## Univariate Analysis
 
