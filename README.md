@@ -63,7 +63,7 @@ To enable analysis of the data, I took multiple steps to clean the given dataset
 
 - I then grouped ratings by recipe id and calculated the mean, ultimately obtaining the average rating for each recipe. I added this data as a new column titled `rating` in the recipes dataset.
 
-2. Adding `chicken_in_ingredients` to recipes
+1. Adding `chicken_in_ingredients` to recipes
 
 - In order to easily check whether or not chicken was an ingredient, I decided to create a `chicken_in_ingredients` column.
 
@@ -71,29 +71,29 @@ To enable analysis of the data, I took multiple steps to clean the given dataset
 
 - I then added this column to the recipes dataset.
 
-3. Adding `chicken_in_name` to recipes
+1. Adding `chicken_in_name` to recipes
 
 - I took a similar approach to adding `chicken_in_name` to recipes in order to provide another opportunity to understand the different relationships between presence of chicken and recipe ratings.
 
 - To implement the column, I did another string-based search for the phrase 'chicken' in the `name` column. The resulting column contained True if 'chicken' was present in the recipe's name and False if otherwise. I added this `chicken_in_name` column to the recipes dataset.
 
-4. Adding `chicken_in_description` to recipes
+1. Adding `chicken_in_description` to recipes
 
 - Like the previous two steps, I did a string-based search to check if the phrase 'chicken' was present in the `description` column of the recipes dataset. I added the resulting `chicken_in_description` column to the recipes dataset.
 
-5. Converting the type of `submitted`
+1. Converting the type of `submitted`
 
 - The `submitted` column in the recipes dataset was initially stored as a string. In order to enable time-based analysis, I converted the `submitted` column from string values to datetime values.
 
-6. Creating `year` and `month` columns
+1. Creating `year` and `month` columns
 
 - After converting the `submitted` column into datetime format, I created `year` and `month` columns to enable time-based analysis. For instance, chicken (not traditionally a Thanksgiving meal) may be less popular in November compared to other recipes involving turkey, pumpkin pie, or mashed potatoes.
 
-7. Converting `tags`, `steps`, and `ingredients` from strings to lists
+1. Converting `tags`, `steps`, and `ingredients` from strings to lists
 
 - The `tags`, `steps`, and `ingredients` columns in the recipes dataset were initially stored as string representations of Python lists. For simplicity, I converted these into lists.
 
-8. Explanding the `nutrition` column
+1. Explanding the `nutrition` column
 
 - The `nutrition` column initially contains, calories, total fat, sugar, sodium, protein, saturated fat, and carbohydrates. Each value was stored as a string representation of a Python list containing the nutrition information.
 
