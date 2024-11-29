@@ -53,7 +53,7 @@ The columns most relevant to my question are "name", "description", and "ingredi
 
 To enable analysis of the data, I took multiple steps to clean the given datasets.
 
-1. Obtaining average rating for each recipe
+1. Obtaining average (mean) rating for each recipe
 - The recipes dataset contains unique recipes, while the interactions dataset contains user reviews. To obtain the average rating for each recipe, I had to match reviews to recipes based on the `id` column in recipes and the `recipe_id` column in interactions.
 - To do this, I first left merged the recipes and interactions datasets together. This meant that all recipes were maintained and interactions were only added if the corresponding recipe existed in recipes.
 - I filled all ratings of 0 with np.nan. When we fill out reviews on websites, we are usually given a scale from 1-5. Thus, a rating of 0 likely represents a missing value where a user did not submit a rating.
@@ -80,7 +80,7 @@ To enable analysis of the data, I took multiple steps to clean the given dataset
 
 My final cleaned dataset contained 83,782 rows and 24 columns.
 
-Here is a preview of the first 5 rows. Note that some columns have been removed as their values were too large to be effectively displayed on this site.
+Here is a preview of the first 5 rows. It is important to note that some columns have been removed as their values were too large to be effectively displayed on this site.
 
 | name                                 |     id | submitted           |   n_steps |   n_ingredients |   rating | chicken_in_ingredients   | chicken_in_name   | chicken_in_description   |   year |   month |   calories |   total_fat |   sugar |   sodium |   protein |   saturated_fat |   carbohydrates |
 |:-------------------------------------|-------:|:--------------------|----------:|----------------:|---------:|:-------------------------|:------------------|:-------------------------|-------:|--------:|-----------:|------------:|--------:|---------:|----------:|----------------:|----------------:|
@@ -91,6 +91,17 @@ Here is a preview of the first 5 rows. Note that some columns have been removed 
 | 2000 meatloaf                        | 475785 | 2012-03-06 00:00:00 |        17 |              13 |        5 | False                    | False             | False                    |   2012 |       3 |      267   |          30 |      12 |       12 |        29 |              48 |               2 |
 
 ## Univariate Analysis
+
+First, I explored the distribution of average (mean) recipe ratings to see if there was any pattern in the data.
+
+<iframe
+  src="assets/recipe_rating_distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Based on the plot, the distributions appears to be skewed to the left, with many recipes having an average rating close to or at 5.0. What is also interesting to note is the presence of small clusters around integers (1, 2, 3, 4, and 5), which could mean that many recipes only receive one rating (thus keeping the mean rating at an integer value).
 
 ## Bivariate Analysis
 
