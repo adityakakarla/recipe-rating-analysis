@@ -96,8 +96,8 @@ First, I explored the distribution of average (mean) recipe ratings to see if th
 
 <iframe
   src="assets/recipe_rating_distribution.html"
-  width="800"
-  height="600"
+  width="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
