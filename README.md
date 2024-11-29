@@ -97,7 +97,7 @@ First, I explored the distribution of average (mean) recipe ratings to see if th
 <iframe
   src="assets/recipe_rating_distribution.html"
   width="700"
-  height="400"
+  height="425"
   frameborder="0"
 ></iframe>
 
@@ -110,7 +110,7 @@ I also explored the relationship between the presence of chicken in a recipe and
 <iframe
   src="assets/average_rating_by_chicken_in_name.html"
   width="700"
-  height="400"
+  height="425"
   frameborder="0"
 ></iframe>
 
