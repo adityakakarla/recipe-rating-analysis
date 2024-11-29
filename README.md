@@ -96,14 +96,25 @@ First, I explored the distribution of average (mean) recipe ratings to see if th
 
 <iframe
   src="assets/recipe_rating_distribution.html"
-  width="700"
-  height="500"
+  width="500"
+  height="300"
   frameborder="0"
 ></iframe>
 
 Based on the plot, the distributions appears to be skewed to the left, with many recipes having an average rating close to or at 5.0. What is also interesting to note is the presence of small clusters around integers (1, 2, 3, 4, and 5), which could mean that many recipes only receive one rating (thus keeping the mean rating at an integer value).
 
 ## Bivariate Analysis
+
+I also explored the relationship between the presence of chicken in a recipe and its rating. Specifically, I took a look at the distribution of average recipe ratings conditioned between recipes with 'chicken' in the name and recipes without 'chicken' in the name.
+
+<iframe
+  src="assets/average_rating_by_chicken_in_name.html"
+  width="500"
+  height="300"
+  frameborder="0"
+></iframe>
+
+Based on the box plots, it looks like there may be a difference: the distribution for recipes with 'chicken' in their name has smaller values for both the first quartile and lower whisker. 
 
 ## Interesting Aggregates
 
