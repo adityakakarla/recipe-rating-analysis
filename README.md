@@ -118,6 +118,15 @@ Based on the box plots, it looks like there may be a difference: the distributio
 
 ## Interesting Aggregates
 
+I continued to explore the relationship between the presence of 'chicken' in a recipe's name and its rating. Below, I created a pivot table containing the mean of each recipe's average rating grouped by whether or not 'chicken' is in the recipe's name.
+
+| chicken_in_name   |   rating |
+|:------------------|---------:|
+| False             |  4.62855 |
+| True              |  4.59805 |
+
+Based on this pivot table, recipes with 'chicken' in the name are rated around 0.03 less than recipes without 'chicken' in the name on average. Later on, I will explore the significance of this observation.
+
 # Assessment of Missingness
 # Hypothesis Testing
 # Framing a Prediction Problem
