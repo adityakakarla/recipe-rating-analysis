@@ -128,6 +128,21 @@ I continued to explore the relationship between the presence of 'chicken' in a r
 Based on this pivot table, recipes with 'chicken' in the name are rated around 0.03 less than recipes without 'chicken' in the name on average. Later on, I will explore the significance of this observation.
 
 # Assessment of Missingness
+
+My initial merged dataset (the recipes dataset after step 1 of the data cleaning process) contained three columns with missing data: `name`, `description`, and `rating`. Because `chicken_in_name` and `chicken_in_description` were derived from these columns, they are also missing data.
+
+## NMAR Analysis
+I believe that the missing data in the `rating` column is not missing at random (NMAR). People who do not feel strongly about a recipe may decide not to leave a review. By contrast, people who love or hate the recipe will feel more inclined to leave a rating on the website to show their feelings.
+
+## Missingness Dependency
+
+<iframe
+  src="assets/mar_perm_test_tvd_rating_n_steps.html"
+  width="700"
+  height="425"
+  frameborder="0"
+></iframe>
+
 # Hypothesis Testing
 # Framing a Prediction Problem
 # Baseline Model
