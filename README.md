@@ -178,15 +178,15 @@ To conduct this permutation test, I created a column to indicate whether or not 
 To determine the p-value, I looked at how many TVDs were as extreme or more extreme than the observed TVD.
 
 <iframe
-  src="assets/mar_perm_test_tvd_rating_n_steps.html"
+  src="assets/mar_perm_test_tvd_rating_n_ingredients.html"
   width="700"
   height="425"
   frameborder="0"
 ></iframe>
 
-Some of the 1000 permuted TVDs fit the above criteria. Specifically, my permutation test yielded a value of 0.097.
+Some of the 1000 permuted TVDs fit the above criteria. Specifically, my permutation test yielded a p-value of 0.097.
 
-Thus, we fail to reject the null. Our test does not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
+Thus, we fail to reject the null. My test results does not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
 
 # Hypothesis Testing
 # Framing a Prediction Problem
