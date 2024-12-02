@@ -136,12 +136,57 @@ I believe that the missing data in the `rating` column is not missing at random 
 
 ## Missingness Dependency
 
+To explore further relationships within the data, I look at the missingness of the `rating` column in the dataset. Specifically, I looked at whether or not the missingness of `rating` is dependent on two other columns: `n_steps` (number of steps in a recipe) and `n_ingredients` (number of ingredients).
+
+### Missigness of `rating` based on `n_steps`
+
+**Null Hypothesis**: The missingness of `rating` does not depend on `n_steps`
+
+**Alternate Hypothesis**: The missingness of `rating` does depend on `n_steps`
+
+**Statistic**: The Total Variation Distance (TVD) between the distribution of `n_steps` among recipes with missing ratings and the distribution of `n_steps` among recipes without missing ratings.
+
+**Significance Level**: α = 0.05
+
+To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the TVD between the `n_steps` distributions of the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the TVD.
+
+To determine the p-value, I looked at how many TVDs were as extreme or more extreme than the observed TVD.
+
 <iframe
   src="assets/mar_perm_test_tvd_rating_n_steps.html"
   width="700"
   height="425"
   frameborder="0"
 ></iframe>
+
+None of the 1000 permuted TVDs were as extreme as the observed TVD. Thus, the p-value is 0.0.
+
+As a result, we reject the null hypothesis. Our test suggests that the missigness of `rating` is dependent on `n_steps`.
+
+### Missigness of `rating` based on `n_ingredients`
+
+**Null Hypothesis**: The missingness of `rating` does not depend on `n_ingredients`
+
+**Alternate Hypothesis**: The missingness of `rating` does depend on `n_ingredients`
+
+**Statistic**: The Total Variation Distance (TVD) between the distribution of `n_steps` among recipes with missing ratings and the distribution of `n_steps` among recipes without missing ratings.
+
+**Significance Level**: α = 0.05
+
+To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the TVD between the `n_steps` distributions of the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the TVD.
+
+To determine the p-value, I looked at how many TVDs were as extreme or more extreme than the observed TVD.
+
+<iframe
+  src="assets/mar_perm_test_tvd_rating_n_steps.html"
+  width="700"
+  height="425"
+  frameborder="0"
+></iframe>
+
+Some of the 1000 permuted TVDs fit the above criteria. Specifically, my permutation test yielded a value of 0.097.
+
+Thus, we fail to reject the null. Our test does not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
 
 # Hypothesis Testing
 # Framing a Prediction Problem
