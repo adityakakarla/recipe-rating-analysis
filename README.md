@@ -186,9 +186,39 @@ To determine the p-value, I looked at how many TVDs were as extreme or more extr
 
 Some of the 1000 permuted TVDs fit the above criteria. Specifically, my permutation test yielded a p-value of 0.097.
 
-Thus, we fail to reject the null. My test results does not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
+Thus, we fail to reject the null. My test results do not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
 
 # Hypothesis Testing
+
+**Null Hypothesis**: The mean rating of recipes with chicken in the name is equal to the mean rating of all recipes.
+
+I chose this null hypothesis because `chicken_in_name` is the best indicator of a chicken-based recipe (other recipes with chicken in the description or as ingredients may not be primarily chicken-based).
+
+**Alternate Hypothesis**: The mean rating of recipes with chicken in the name is not equal to the mean rating of all recipes.
+
+I chose this alternate hypothesis because we are interested in whether or not chicken-based recipes deviate from the population, not necessarily in a specific direction.
+
+**Statistic**: Absolute difference between mean rating of samples with chicken in the name and all samples.
+
+Because I am conducting a two-sided test, I chose to use the absolute difference in means.
+
+**Significance Level**: α = 0.05
+
+I chose 0.05 as the significance level because a Type-1 error (rejecting the null hypothesis when it is actually true) is not particularly harmful in our case.
+
+To conduct this hypothesis test, I first calculated the difference in means between just chicken-based recipes and all recipes. I then created 1000 bootstrapped samples from the overall dataset. I evaluated the absolute difference between the sample mean and the overall mean and stored these in an array.
+
+<iframe
+  src="assets/hypothesis_test.html"
+  width="700"
+  height="425"
+  frameborder="0"
+></iframe>
+
+Following these steps, 0 out of 1000 observations were as extreme as my observed statistic (0.0273).
+
+Thus, the p-value is 0.0. We reject the null hypothesis. The test suggests that the mean rating of recipes with chicken in the name is not equal to the mean rating of all recipes.
+
 # Framing a Prediction Problem
 # Baseline Model
 # Final Model
