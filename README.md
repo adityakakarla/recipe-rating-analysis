@@ -136,7 +136,7 @@ I believe that the missing data in the `rating` column is not missing at random 
 
 ## Missingness Dependency
 
-To explore further relationships within the data, I look at the missingness of the `rating` column in the dataset. Specifically, I looked at whether or not the missingness of `rating` is dependent on two other columns: `n_steps` (number of steps in a recipe) and `n_ingredients` (number of ingredients).
+To explore further relationships within the data, I look at the missingness of the `rating` column in the dataset. Specifically, I looked at whether or not the missingness of `rating` is dependent on two other columns: `n_steps` (number of steps in a recipe) and `sodium` (PDV—percent daily value).
 
 ### Missigness of `rating` based on `n_steps`
 
@@ -144,49 +144,49 @@ To explore further relationships within the data, I look at the missingness of t
 
 **Alternate Hypothesis**: The missingness of `rating` does depend on `n_steps`
 
-**Statistic**: The Total Variation Distance (TVD) between the distribution of `n_steps` among recipes with missing ratings and the distribution of `n_steps` among recipes without missing ratings.
+**Statistic**: The absolute difference between the mean of `n_steps` among recipes with missing ratings and the the mean of `n_steps` among recipes without missing ratings.
 
 **Significance Level**: α = 0.05
 
-To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the TVD between the `n_steps` distributions of the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the TVD.
+To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the difference in means of `n_steps` between the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the difference in means.
 
-To determine the p-value, I looked at how many TVDs were as extreme or more extreme than the observed TVD.
+To determine the p-value, I looked at how many sampled differences in means were as extreme or more extreme than the observed statistic.
 
 <iframe
-  src="assets/mar_perm_test_tvd_rating_n_steps.html"
+  src="assets/mar_perm_mean_diff_rating_n_steps.html"
   width="700"
   height="425"
   frameborder="0"
 ></iframe>
 
-None of the 1000 permuted TVDs were as extreme as the observed TVD. Thus, the p-value is 0.0.
+None of the 1000 permuted differences were as extreme as the observed difference. Thus, the p-value is 0.0.
 
 As a result, we reject the null hypothesis. Our test suggests that the missigness of `rating` is dependent on `n_steps`.
 
-### Missigness of `rating` based on `n_ingredients`
+### Missigness of `rating` based on `sodium`
 
-**Null Hypothesis**: The missingness of `rating` does not depend on `n_ingredients`
+**Null Hypothesis**: The missingness of `rating` does not depend on `sodium`
 
-**Alternate Hypothesis**: The missingness of `rating` does depend on `n_ingredients`
+**Alternate Hypothesis**: The missingness of `rating` does depend on `sodium`
 
-**Statistic**: The Total Variation Distance (TVD) between the distribution of `n_steps` among recipes with missing ratings and the distribution of `n_steps` among recipes without missing ratings.
+**Statistic**: The absolute difference between the mean of `sodium` among recipes with missing ratings and the the mean of `sodium` among recipes without missing ratings.
 
 **Significance Level**: α = 0.05
 
-To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the TVD between the `n_steps` distributions of the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the TVD.
+To conduct this permutation test, I created a column to indicate whether or not `rating` is missing. First, I calculated the observed test statistic by calculating the difference in means of `sodium` between the two groups (`rating` present and `rating` missing). Then, I shuffled the missing indicator column 1000 times and recalculated the difference in means.
 
-To determine the p-value, I looked at how many TVDs were as extreme or more extreme than the observed TVD.
+To determine the p-value, I looked at how many sampled differences in means were as extreme or more extreme than the observed statistic.
 
 <iframe
-  src="assets/mar_perm_test_tvd_rating_n_ingredients.html"
+  src="assets/mar_perm_test_mean_diff_rating_sodium.html"
   width="700"
   height="425"
   frameborder="0"
 ></iframe>
 
-Some of the 1000 permuted TVDs fit the above criteria. Specifically, my permutation test yielded a p-value of 0.097.
+Some of the 1000 permuted differences in means fit the above criteria. Specifically, my permutation test yielded a p-value of 0.874.
 
-Thus, we fail to reject the null. My test results do not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `n_ingredients`.
+Thus, we fail to reject the null. My test results do not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `sodium`.
 
 # Hypothesis Testing
 
