@@ -153,7 +153,7 @@ To conduct this permutation test, I created a column to indicate whether or not 
 To determine the p-value, I looked at how many sampled differences in means were as extreme or more extreme than the observed statistic.
 
 <iframe
-  src="assets/mar_perm_mean_diff_rating_n_steps.html"
+  src="assets/mar_perm_test_mean_diff_rating_n_steps.html"
   width="700"
   height="425"
   frameborder="0"
@@ -220,6 +220,22 @@ Following these steps, 0 out of 1000 observations were as extreme as my observed
 Thus, the p-value is 0.0. We reject the null hypothesis. The test suggests that the mean rating of recipes with chicken in the name is not equal to the mean rating of all recipes.
 
 # Framing a Prediction Problem
+
+I will be attempting to predict the average rating of a recipe using regression. I chose `rating` because it is the most well-defined metric for how "good" a recipe is. Additionally, the average rating of a recipe is something we know in the future, while we know other critical information (such as `n_steps`, `n_ingredients`, and most of the other columns in the dataset) at the time of recipe submission.
+
+To evaluate my regression model, I have chosen to utilize mean squared error (MSE). The distribution of ratings is heavily skewed, with most recipes having an average rating of around 5. However, a model simply predicting 5 would not be useful for someone interested in seeing a predicted rating for their recipe. Therefore, it is important to penalize large deviations, making MSE an ideal evaluation metric.
+
 # Baseline Model
+
+For my baseline model, I utilized a random forest regressor with default hyperparameters.
+
+First, I dropped any rows containing missing data in any column (for either my baseline or final model). I then split the data into a training set and a test set.
+
+For the baseline model, I utilized three features: `chicken_in_name` (nominal), `chicken_in_ingredients` (nominal), and `minutes` (quantitative).
+
+I one hot encoded `chicken_in_name` and `chicken_in_ingredients`. Because both of these columns only contain either True or False values, I dropped one of the encoded columns. I also utilized a quantile transformer to modify `minutes` due to the presence of extremely larger outliers in the distribution of `minutes`.
+
+The mean squared error (MSE) for my test data is 0.408. Without another MSE metric for comparison, I chose to calculate the r^2 value for my predictions. This came out to a value of -0.00896. This means that the model is likely a poor representation of the data, because such a value means that a model based on a single constant would perform better.
+
 # Final Model
 # Fairness Analysis
