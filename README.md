@@ -223,7 +223,7 @@ Thus, the p-value is 0.0. We reject the null hypothesis. The test suggests that 
 
 I will be attempting to predict the average rating of a recipe using regression. I chose `rating` because it is the most well-defined metric for how "good" a recipe is. Additionally, the average rating of a recipe is something we know in the future, while we know other critical information (such as `n_steps`, `n_ingredients`, and most of the other columns in the dataset) at the time of recipe submission.
 
-To evaluate my regression model, I have chosen to utilize mean squared error (MSE). The distribution of ratings is heavily skewed, with most recipes having an average rating of around 5. However, a model simply predicting 5 would not be useful for someone interested in seeing a predicted rating for their recipe. Therefore, it is important to penalize large deviations, making MSE an ideal evaluation metric.
+To evaluate my regression model, I have chosen to utilize mean squared error (MSE). The distribution of ratings is heavily skewed, with most recipes having an average rating of around 5. However, a model simply predicting 5 would not be useful for someone interested in seeing a predicted rating for their recipe. Therefore, it is important to penalize large deviations, making MSE an ideal evaluation metric. I will also utilize the r^2 score to better understand the effectiveness of the model.
 
 # Baseline Model
 
@@ -238,4 +238,45 @@ I one hot encoded `chicken_in_name` and `chicken_in_ingredients`. Because both o
 The mean squared error (MSE) for my test data is 0.408. Without another MSE metric for comparison, I chose to calculate the r^2 value for my predictions. This came out to a value of -0.00896. This means that the model is likely a poor representation of the data, because such a value means that a model based on a single constant would perform better.
 
 # Final Model
+
+## Features
+
+In my final model, I utilized the following features:
+
+1. `chicken_in_name`
+
+This feature tells us whether or not the phrase 'chicken' is in the name of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without 'chicken' in the name compared to recipes with 'chicken' in the name. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_name` column.
+
+2. `chicken_in_ingredients`
+
+This feature tells us whether or not chicken or any chicken-related product is an ingredient of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without chicken-based products as an ingredient compared to recipes with chicken-based products. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_ingredients` column.
+
+3. `sugar`
+
+This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers (other transformers like a standard scaler would be an inaccurate representation of the data).
+
+4. `total_fat`
+
+This feature tells us the % daily value of total fat in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher total fat. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+
+5. `protein`
+
+This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher protein. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+
+6. `sodium`
+
+This feature tells us the % daily value of sodium in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher sodium. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+
+7. `month`
+
+This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+
+## The Model
+
+For the modeling algorithm itself, I looked at a variety of options (including LinearRegression, turning the regression problem into a classification problem with RandomForestClassifier, and others). However, RandomForestRegressor appeared to be the best option given the skew in rating data.
+
+I utilized GridSearchCV to find the best hyperparameters for my model. The best combination of hyperparameters was max_depth=10, min_samples_split=30, and n_estimators=200.
+
+The model itself ended up with a mean squared error (MSE) of 0.403 (the baseline model had an MSE of 0.408) and an r^2 value of -0.00896 (the baseline model had an r^2 value of 0.00304). Based on these values, it appears that the final model marginally improved upon the baseline model. However, the overall performance of the model still appears to be poor.
+
 # Fairness Analysis
