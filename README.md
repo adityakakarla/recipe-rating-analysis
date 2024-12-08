@@ -215,7 +215,7 @@ To conduct this hypothesis test, I first calculated the difference in means betw
   frameborder="0"
 ></iframe>
 
-Following these steps, 0 out of 1000 observations were as extreme as my observed statistic (0.0273).
+Following these steps, 0 out of 1000 observations were as extreme as my observed statistic.
 
 Thus, the p-value is 0.0. We reject the null hypothesis. The test suggests that the mean rating of recipes with chicken in the name is not equal to the mean rating of all recipes.
 
@@ -244,32 +244,19 @@ The mean squared error (MSE) for my test data is 0.408. Without another MSE metr
 In my final model, I utilized the following features:
 
 1. `chicken_in_name`
-
-This feature tells us whether or not the phrase 'chicken' is in the name of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without 'chicken' in the name compared to recipes with 'chicken' in the name. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_name` column.
-
+- This feature tells us whether or not the phrase 'chicken' is in the name of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without 'chicken' in the name compared to recipes with 'chicken' in the name. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_name` column.
 2. `chicken_in_ingredients`
-
-This feature tells us whether or not chicken or any chicken-related product is an ingredient of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without chicken-based products as an ingredient compared to recipes with chicken-based products. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_ingredients` column.
-
+- This feature tells us whether or not chicken or any chicken-related product is an ingredient of a recipe. Based on a pivot table I had constructed, I observed higher ratings for recipes without chicken-based products as an ingredient compared to recipes with chicken-based products. Thus, I felt this could be a useful trend I could capture by one hot encoding the boolean values in the `chicken_in_ingredients` column.
 3. `sugar`
-
-This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers (other transformers like a standard scaler would be an inaccurate representation of the data).
-
+- This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers (other transformers like a standard scaler would be an inaccurate representation of the data).
 4. `total_fat`
-
-This feature tells us the % daily value of total fat in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher total fat. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
-
+- This feature tells us the % daily value of total fat in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher total fat. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
 5. `protein`
-
-This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher protein. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
-
+- This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher protein. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
 6. `sodium`
-
-This feature tells us the % daily value of sodium in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher sodium. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
-
+- This feature tells us the % daily value of sodium in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher sodium. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
 7. `month`
-
-This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+- This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
 
 ## The Model
 
@@ -280,3 +267,26 @@ I utilized GridSearchCV to find the best hyperparameters for my model. The best 
 The model itself ended up with a mean squared error (MSE) of 0.403 (the baseline model had an MSE of 0.408) and an r^2 value of -0.00896 (the baseline model had an r^2 value of 0.00304). Based on these values, it appears that the final model marginally improved upon the baseline model. However, the overall performance of the model still appears to be poor.
 
 # Fairness Analysis
+
+For my fairness analysis, I looked at model parity between two groups: high protein and low protein. To designate whether or not a recipe belongs to the high protein or low protein group, I compared its protein PDV (percent daily value) to the median protein PDV. If it was greater than or equal to the median, I added it to the high protein group. Otherwise, I added it to the low protein group. I chose to evaluate MSE (mean squared error) parity between the two groups because large deviations between actual rating and predicting ratings are significantly worse than minor deviations.
+
+**Null Hypothesis**: The MSE of our model across recipes with high protein and low protein is roughly the same. The model achieves MSE parity across these two groups.
+
+**Alternate Hypothesis**: The MSE of our model across recipes with high protein and low protein is not the same. The model does not achieve MSE parity across these two groups.
+
+**Statistic**: Absolute difference between MSE of our final model for recipes with high protein and recipes with low protein.
+
+**Significance Level**: α = 0.05
+
+I chose 0.05 as the significance level because a Type-1 error (rejecting the null hypothesis when it is actually true) is not particularly harmful in our case.
+
+To conduct this hypothesis test, I first calculated the difference in means between just chicken-based recipes and all recipes. I then created 1000 bootstrapped samples from the overall dataset. I evaluated the absolute difference between the sample mean and the overall mean and stored these in an array.
+
+<iframe
+  src="assets/missingness_test.html"
+  width="700"
+  height="425"
+  frameborder="0"
+></iframe>
+
+My fairness analysis yielded a p-value of 0.009. Thus, we reject the null hypothesis. The test suggests that the MSE of our model across recipes with high protein and low protein is not the same. Based on the test, our model appears to be unfair.
