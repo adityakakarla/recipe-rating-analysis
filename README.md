@@ -127,6 +127,20 @@ I continued to explore the relationship between the presence of 'chicken' in a r
 
 Based on this pivot table, recipes with 'chicken' in the name are rated around 0.03 less than recipes without 'chicken' in the name on average. Later on, I will explore the significance of this observation.
 
+| chicken_in_ingredients   |   rating |
+|:-------------------------|---------:|
+| False                    |  4.62829 |
+| True                     |  4.61077 |
+
+Based on this pivot table, recipes with 'chicken' in the ingredients list are rated around 0.018 less than recipes without 'chicken' in the ingredients list on average. This appears to be less extreme than the difference in rating when conditioned on `chicken_in_name`.
+
+| chicken_in_description   |   rating |
+|:-------------------------|---------:|
+| False                    |  4.62597 |
+| True                     |  4.61921 |
+
+Based on this pivot table, recipes with 'chicken' in the description are rated around 0.018 less than recipes without 'chicken' in the description on average. This appears to be less extreme than the difference in rating when conditioned on `chicken_in_ingredients` or `chicken_in_name`.
+
 # Assessment of Missingness
 
 My initial merged dataset (the recipes dataset after step 1 of the data cleaning process) contained three columns with missing data: `name`, `description`, and `rating`. Because `chicken_in_name` and `chicken_in_description` were derived from these columns, they are also missing data.
@@ -184,7 +198,7 @@ To determine the p-value, I looked at how many sampled differences in means were
   frameborder="0"
 ></iframe>
 
-Some of the 1000 permuted differences in means fit the above criteria. Specifically, my permutation test yielded a p-value of 0.874.
+Some of the 1000 permuted differences in means fit the above criteria. Specifically, my permutation test yielded a p-value of 0.88.
 
 Thus, we fail to reject the null. My test results do not provide sufficient evidence to support the idea that the missingness of `rating` is dependent on `sodium`.
 
@@ -206,7 +220,7 @@ Because I am conducting a two-sided test, I chose to use the absolute difference
 
 I chose 0.05 as the significance level because a Type-1 error (rejecting the null hypothesis when it is actually true) is not particularly harmful in our case.
 
-To conduct this hypothesis test, I first calculated the difference in means between just chicken-based recipes and all recipes. I then created 1000 bootstrapped samples from the overall dataset. I evaluated the absolute difference between the sample mean and the overall mean and stored these in an array.
+To conduct this hypothesis test, I first calculated the difference in means between just chicken-based recipes and all recipes. I then created 1000 samples from the overall dataset. I evaluated the absolute difference between the sample mean and the overall mean and stored these in an array.
 
 <iframe
   src="assets/hypothesis_test.html"
@@ -283,10 +297,10 @@ I chose 0.05 as the significance level because a Type-1 error (rejecting the nul
 To conduct this hypothesis test, I first calculated the difference in means between just chicken-based recipes and all recipes. I then created 1000 bootstrapped samples from the overall dataset. I evaluated the absolute difference between the sample mean and the overall mean and stored these in an array.
 
 <iframe
-  src="assets/missingness_test.html"
+  src="assets/fairness_analysis.html"
   width="700"
   height="425"
   frameborder="0"
 ></iframe>
 
-My fairness analysis yielded a p-value of 0.009. Thus, we reject the null hypothesis. The test suggests that the MSE of our model across recipes with high protein and low protein is not the same. Based on the test, our model appears to be unfair.
+My fairness analysis yielded a p-value of 0.008. Thus, we reject the null hypothesis. The test suggests that the MSE of our model across recipes with high protein and low protein is not the same. Based on the test, my final model appears to be unfair across these two groups.
