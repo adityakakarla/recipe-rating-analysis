@@ -146,11 +146,13 @@ Based on this pivot table, recipes with 'chicken' in the description are rated a
 My initial merged dataset (the recipes dataset after step 1 of the data cleaning process) contained three columns with missing data: `name`, `description`, and `rating`. Because `chicken_in_name` and `chicken_in_description` were derived from these columns, they are also missing data.
 
 ## NMAR Analysis
-I believe that the missing data in the `rating` column is not missing at random (NMAR). People who do not feel strongly about a recipe may decide not to leave a review. By contrast, people who love or hate the recipe will feel more inclined to leave a rating on the website to show their feelings.
+I believe that the missing data in the `rating` column is likely not missing at random (NMAR). People who do not feel strongly about a recipe may decide not to leave a review. By contrast, people who love or hate the recipe will feel more inclined to leave a rating on the website to show their feelings.
 
 ## Missingness Dependency
 
 To explore further relationships within the data, I look at the missingness of the `rating` column in the dataset. Specifically, I looked at whether or not the missingness of `rating` is dependent on two other columns: `n_steps` (number of steps in a recipe) and `sodium` (PDV—percent daily value).
+
+Note: For this step, I assumed `rating` is not NMAR.
 
 ### Missigness of `rating` based on `n_steps`
 
@@ -270,7 +272,7 @@ In my final model, I utilized the following features:
 6. `sodium`
 - This feature tells us the % daily value of sodium in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had higher sodium. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
 7. `month`
-- This feature tells us the % daily value of sugar in each recipe. Based on a bar chart I had constructed, it looked like there was a trend where recipes with higher ratings had less sugar. Thus, I wanted to include this feature in case there was any useful information. I chose to use a quantile transformer to modify this column due to the presence of extreme outliers.
+- This feature tells us the month a recipe was published. Based on a bar chart I had constructed, there appeared to be seasonal fluctuations in average recipe rating. Thus, it made sense to include this as a feature. I simply passed this feature through to the model (no transformation).
 
 ## The Model
 
@@ -284,9 +286,9 @@ The model itself ended up with a mean squared error (MSE) of 0.403 (the baseline
 
 For my fairness analysis, I looked at model parity between two groups: high protein and low protein. To designate whether or not a recipe belongs to the high protein or low protein group, I compared its protein PDV (percent daily value) to the median protein PDV. If it was greater than or equal to the median, I added it to the high protein group. Otherwise, I added it to the low protein group. I chose to evaluate MSE (mean squared error) parity between the two groups because large deviations between actual rating and predicting ratings are significantly worse than minor deviations.
 
-**Null Hypothesis**: The MSE of our model across recipes with high protein and low protein is roughly the same. The model achieves MSE parity across these two groups.
+**Null Hypothesis**: The MSE of the model across recipes with high protein and low protein is roughly the same. The model achieves MSE parity across these two groups.
 
-**Alternate Hypothesis**: The MSE of our model across recipes with high protein and low protein is not the same. The model does not achieve MSE parity across these two groups.
+**Alternate Hypothesis**: The MSE of the model across recipes with high protein and low protein is not the same. The model does not achieve MSE parity across these two groups.
 
 **Statistic**: Absolute difference between MSE of our final model for recipes with high protein and recipes with low protein.
 
